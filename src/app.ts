@@ -8,7 +8,7 @@ const app = new App({
   appToken: process.env.SLACK_APP_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   logLevel: LogLevel.INFO,
-  socketMode: true,
+  // socketMode: true,
 });
 const notifiee = process.env.STATUS_CHECK_SLACK_MEMBER as string;
 const whitelistedChannels = process.env.SLACK_WHITELISTED_CHANNELS?.split(',') || [];
