@@ -1,7 +1,9 @@
-app = "divine-voice-7312"
+# fly.toml file generated for wild-water-6032 on 2023-03-20T17:16:28+07:00
+
+app = "wild-water-6032"
 kill_signal = "SIGINT"
 kill_timeout = 5
-primary_region = "syd"
+primary_region = "hkg"
 processes = []
 
 [env]

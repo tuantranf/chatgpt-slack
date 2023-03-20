@@ -283,7 +283,10 @@ app.message(/tldr/i, async ({ message, say, client }) => {
 
 (async () => {
   // Start your app
-  await app.start(Number(process.env.PORT) || 3000);
+  await app.start({
+    host: '0.0.0.0',
+    port: Number(process.env.PORT) || 3000
+  });
 
   console.log('⚡️ Bolt app is running!');
 
