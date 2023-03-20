@@ -22,7 +22,7 @@ const openai = new OpenAIApi(openAIConfig);
 // Listens to incoming messages that contain "hello"
 app.message('hello', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
-  console.log(message);
+  // console.log(message);
   await say(`Hey there <@${message.user}>!`);
 });
 
@@ -40,6 +40,12 @@ app.event('app_mention', async ({ event, context, client, say }) => {
   const prompt = event.text.replace(/<@.*>/, '').trim();
 
   if (prompt.length === 0) return;
+
+  await say({
+    text: 'Now processing ...',
+    channel,
+    // thread_ts: ts,
+  });
 
   const response = await openai.createChatCompletion({
     model: 'gpt-3.5-turbo',
@@ -82,6 +88,8 @@ app.event('app_mention', async ({ event, context, client, say }) => {
 
 // Listens to incoming messages that starts with "q?"
 app.message(/^q\?/, async ({ message, say }) => {
+  // console.log('Received message', message);
+
   // Filter out messages from channels that are not whitelisted
   if (!whitelistedChannels.includes(message.channel)) {
     return;
@@ -95,6 +103,12 @@ app.message(/^q\?/, async ({ message, say }) => {
     const prompt = text?.replace(/^q\?/, '').trim();
 
     if (prompt.length === 0) return;
+
+    await say({
+      text: 'Now processing ...',
+      channel,
+      thread_ts: ts,
+    });
 
     const response = await openai.createChatCompletion({
       model: 'gpt-3.5-turbo',
@@ -138,6 +152,7 @@ app.message(/^q\?/, async ({ message, say }) => {
 
 // Listens to incoming messages that starts with "i?"
 app.message(/^i\?/, async ({ message, say }) => {
+  // console.log('Received message', message);
   // Filter out messages from channels that are not whitelisted
   if (!whitelistedChannels.includes(message.channel)) {
     return;
@@ -151,6 +166,12 @@ app.message(/^i\?/, async ({ message, say }) => {
     const prompt = text?.replace(/^i\?/, '').trim();
 
     if (prompt.length === 0) return;
+
+    await say({
+      text: 'Now processing ...',
+      channel,
+      thread_ts: ts,
+    });
 
     const response = await openai.createImage({
       prompt,
@@ -184,7 +205,7 @@ app.message(/^i\?/, async ({ message, say }) => {
 });
 
 app.message(/tldr/i, async ({ message, say, client }) => {
-  console.log('Received message', message);
+  // console.log('Received message', message);
   if (message.subtype === undefined && message.thread_ts) {
     try {
       const result = await client.conversations.replies({
