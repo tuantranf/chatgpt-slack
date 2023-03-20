@@ -95,3 +95,5 @@ If you want the bot to listen for multiple channels, you can separate the channe
 ```
 SLACK_WHITELISTED_CHANNELS="C04F7ML901G,C04F7ML901Z,C04F7ML901D"
 ```
+
+https://slack.dev/bolt-js/tutorial/getting-started
