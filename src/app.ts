@@ -1,15 +1,27 @@
 import './utils/env';
-import { App, LogLevel } from '@slack/bolt';
+import { App, LogLevel, ExpressReceiver } from '@slack/bolt';
 
 import { Configuration, OpenAIApi } from 'openai';
+
+const receiver = new ExpressReceiver({
+  // @ts-ignore
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+});
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   appToken: process.env.SLACK_APP_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   logLevel: LogLevel.INFO,
+  receiver: receiver,
   // socketMode: true,
 });
+
+// health check for ALB
+receiver.app.get('/', (_, res) => {
+  res.status(200).send(); // respond 200 OK to the default health check method
+});
+
 const notifiee = process.env.STATUS_CHECK_SLACK_MEMBER as string;
 const whitelistedChannels = process.env.SLACK_WHITELISTED_CHANNELS?.split(',') || [];
 let members: Record<string, string> = {};
