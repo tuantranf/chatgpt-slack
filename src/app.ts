@@ -23,6 +23,7 @@ const openai = new OpenAIApi(openAIConfig);
 app.message('hello', async ({ message, say }) => {
   // say() sends a message to the channel where the event was triggered
   // console.log(message);
+  // @ts-ignore
   await say(`Hey there <@${message.user}>!`);
 });
 
